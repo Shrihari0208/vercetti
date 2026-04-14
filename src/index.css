@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #06000f;
+  --color-brand-pink: #ff2d7e;
+  --color-brand-cyan: #00f5ff;
+  --color-brand-purple: #a855f7;
+  --color-brand-orange: #ff8c00;
+
+  --font-lexend: "Lexend", sans-serif;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+  
+  .glass-pink {
+    @apply bg-brand-pink/5 backdrop-blur-md border border-brand-pink/20 shadow-[0_0_15px_rgba(255,45,126,0.3)];
+  }
+
+  .glass-cyan {
+    @apply bg-brand-cyan/5 backdrop-blur-md border border-brand-cyan/20 shadow-[0_0_15px_rgba(0,245,255,0.3)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-pink via-brand-purple to-brand-cyan;
+  }
+
+  .neon-shadow-pink {
+    box-shadow: 0 0 10px rgba(255, 45, 126, 0.5), 0 0 20px rgba(255, 45, 126, 0.3);
+  }
+  
+  .neon-shadow-cyan {
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.5), 0 0 20px rgba(0, 245, 255, 0.3);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent scrollbars from popping in and out */
+  overflow-y: scroll;
+}
+
+body {
+  /* Hide the scrollbar physically but keep functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+body::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Ensure canvas does not block scroll */
+canvas {
+  touch-action: none;
+}
