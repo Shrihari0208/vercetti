@@ -47,7 +47,7 @@ export const AboutSection = () => {
 
   return (
     <section id="about" ref={ref} className="min-h-screen flex items-center py-20 pb-32">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 relative z-10 pointer-events-none">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 pointer-events-none">
         
         {/* Left Content: Bio and Timeline */}
         <div className="flex flex-col justify-center pointer-events-auto">

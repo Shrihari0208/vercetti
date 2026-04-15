@@ -8,9 +8,9 @@ export const ProjectsSection = () => {
 
   return (
     <section id="projects" ref={ref} className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10 pointer-events-none">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 pointer-events-none">
         
-        <div className="flex flex-col justify-center pointer-events-auto mt-12 md:mt-0">
+        <div className="flex flex-col justify-center pointer-events-auto mt-12 lg:mt-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}

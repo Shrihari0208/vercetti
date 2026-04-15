@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Stars, MeshReflectorMaterial, Grid } from '@react-three/drei';
 import * as THREE from 'three';
 import { CharacterModel } from './CharacterModel';
@@ -74,6 +74,9 @@ const PalmTree = ({ position, rotation }: { position: [number, number, number], 
 };
 
 export const HeroScene = () => {
+  const { viewport } = useThree();
+  const isMobile = viewport.width < 5;
+
   return (
     <group>
       <fog attach="fog" args={['#1a0520', 8, 30]} />
@@ -134,8 +137,9 @@ export const HeroScene = () => {
       <CharacterModel
         fbxPath={ANIMATIONS.hero}
         secondaryFbxPath="/animations/standing-taunt-battlecry.fbx"
-        position={[2, -0.9, 0]}
+        position={isMobile ? [0, -1, -2] : [2, -0.9, 0]}
         rotation={[0, -Math.PI / 4, 0]}
+        scale={isMobile ? 0.8 : 1}
       />
     </group>
   );

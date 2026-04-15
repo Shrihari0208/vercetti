@@ -42,7 +42,7 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
+        <div className="hidden lg:flex items-center space-x-8 text-sm font-medium">
           {NAV_LINKS.map((link) => (
             <button
               key={link.id}
@@ -63,7 +63,7 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white hover:text-brand-cyan transition-colors">
             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -77,7 +77,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 glass border-t border-white/10 overflow-hidden"
+            className="lg:hidden absolute top-full left-0 right-0 glass border-t border-white/10 overflow-hidden"
           >
             <div className="flex flex-col py-4 px-6 space-y-4">
               {NAV_LINKS.map((link) => (

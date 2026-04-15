@@ -5,8 +5,8 @@ export const HeroSection = () => {
   const ref = useScrollSection<HTMLElement>('hero');
 
   return (
-    <section id="hero" ref={ref} className="min-h-screen flex items-center pt-20">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10 pointer-events-none">
+    <section id="hero" ref={ref} className="min-h-screen flex items-center pt-28 lg:pt-20">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10 pointer-events-none">
         
         <div className="flex flex-col justify-center pointer-events-auto">
           {/* Pulse Badge */}

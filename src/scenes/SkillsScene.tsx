@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Stars, Grid } from '@react-three/drei';
 import * as THREE from 'three';
 import { CharacterModel } from './CharacterModel';
@@ -43,6 +43,9 @@ const FloatingOrbs = () => {
 };
 
 export const SkillsScene = () => {
+  const { viewport } = useThree();
+  const isMobile = viewport.width < 5;
+
   return (
     <group>
       <fog attach="fog" args={['#06000f', 2, 20]} />
@@ -68,8 +71,9 @@ export const SkillsScene = () => {
 
       <CharacterModel 
         fbxPath={ANIMATIONS.skills} 
-        position={[2, -0.8, 0]} 
+        position={isMobile ? [0, -0.8, -2] : [2, -0.8, 0]}
         rotation={[0, -Math.PI / 4, 0]} 
+        scale={isMobile ? 0.7 : 1}
       />
     </group>
   );

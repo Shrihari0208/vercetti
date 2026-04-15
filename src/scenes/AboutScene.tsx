@@ -57,6 +57,9 @@ const OceanPlane = () => {
 };
 
 export const AboutScene = () => {
+  const { viewport } = useThree();
+  const isMobile = viewport.width < 5;
+
   return (
     <group>
       <fog attach="fog" args={['#06000f', 5, 30]} />
@@ -77,8 +80,9 @@ export const AboutScene = () => {
 
       <CharacterModel 
         fbxPath={ANIMATIONS.about} 
-        position={[0, -0.8, 0]} 
+        position={isMobile ? [0, -0.8, -2] : [0, -0.8, 0]} 
         rotation={[0, 0, 0]} 
+        scale={isMobile ? 0.8 : 1}
       />
     </group>
   );

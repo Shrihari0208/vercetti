@@ -7,7 +7,7 @@ export const SkillsSection = () => {
 
   return (
     <section id="skills" ref={ref} className="min-h-screen flex items-center py-20">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10 pointer-events-none">
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10 pointer-events-none">
         
         <div className="flex flex-col justify-center pointer-events-auto">
           <motion.div
@@ -51,7 +51,7 @@ export const SkillsSection = () => {
         </div>
 
         {/* Right side is intentionally empty for 3D space */}
-        <div className="hidden md:block"></div>
+        <div className="hidden lg:block"></div>
       </div>
     </section>
   );

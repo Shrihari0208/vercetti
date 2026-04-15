@@ -1,5 +1,5 @@
 import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
 import { CharacterModel } from './CharacterModel';
@@ -64,6 +64,9 @@ const ParticleSystem = () => {
 };
 
 export const ProjectsScene = () => {
+  const { viewport } = useThree();
+  const isMobile = viewport.width < 5;
+
   return (
     <group>
       <fog attach="fog" args={['#06000f', 5, 20]} />
@@ -82,8 +85,9 @@ export const ProjectsScene = () => {
 
       <CharacterModel 
         fbxPath={ANIMATIONS.projects} 
-        position={[2, -0.8, 0]} 
+        position={isMobile ? [0, -1, -3] : [2, -0.8, 0]} 
         rotation={[0, -Math.PI / 4, 0]} 
+        scale={isMobile ? 0.7 : 1}
       />
     </group>
   );
