@@ -73,39 +73,78 @@ const PalmTree = ({ position, rotation }: { position: [number, number, number], 
   );
 };
 
-// Lightning Effect
-const LightningEffect = ({ active }: { active: boolean }) => {
-  const lightRef = useRef<THREE.PointLight>(null);
-  const ambientRef = useRef<THREE.AmbientLight>(null);
-  const flashTime = useRef(0);
+// Dramatic Taunt Effect (Shockwave + Aura + Screen Shake)
+const DramaticTauntEffect = ({ active, isMobile }: { active: boolean, isMobile: boolean }) => {
+  const { camera } = useThree();
+  const ringRef = useRef<THREE.Mesh>(null);
+  const auraRef = useRef<THREE.Mesh>(null);
+  
+  const shockwaveProgress = useRef(0);
+  const prevActive = useRef(false);
 
   useFrame((state, delta) => {
-    if (!lightRef.current || !ambientRef.current) return;
-
+    // 1. Camera Shake via FOV (Screen Rumble)
+    const perspectiveCamera = camera as THREE.PerspectiveCamera;
     if (active) {
-      flashTime.current += delta * 20;
-      // High-frequency burst flickering pseudo-randomly
-      const flash = Math.pow(Math.sin(flashTime.current) * Math.cos(flashTime.current * 4.3), 4);
-      const targetIntensity = flash > 0.05 ? flash * 150 : 0;
-      
-      lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, targetIntensity, 0.5);
-      ambientRef.current.intensity = THREE.MathUtils.lerp(ambientRef.current.intensity, targetIntensity * 0.1, 0.5);
-    } else {
-      lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, 0, 0.1);
-      ambientRef.current.intensity = THREE.MathUtils.lerp(ambientRef.current.intensity, 0, 0.1);
+      const shakeAmt = 1.0; // Jitter amount
+      perspectiveCamera.fov = 45 + (Math.random() - 0.5) * shakeAmt;
+      perspectiveCamera.updateProjectionMatrix();
+    } else if (Math.abs(perspectiveCamera.fov - 45) > 0.1) {
+      // Smoothly restore camera when taunt ends
+      perspectiveCamera.fov = THREE.MathUtils.lerp(perspectiveCamera.fov, 45, 0.1);
+      perspectiveCamera.updateProjectionMatrix();
     }
+
+    // New activation trigger
+    if (active && !prevActive.current) {
+      shockwaveProgress.current = 0;
+    }
+
+    // 2. Shockwave Expansion
+    if (ringRef.current) {
+      if (active || shockwaveProgress.current > 0) {
+        shockwaveProgress.current += delta * 2; // Expansion speed
+        if (shockwaveProgress.current < 1) {
+          const scale = shockwaveProgress.current * 12; // Expands to 12x size
+          ringRef.current.scale.set(scale, scale, scale);
+          
+          const mat = ringRef.current.material as THREE.MeshBasicMaterial;
+          mat.opacity = 1 - Math.pow(shockwaveProgress.current, 2); // Exponantional fade out
+        }
+      }
+    }
+
+    // 3. Supercharged Aura
+    if (auraRef.current) {
+      const auraMat = auraRef.current.material as THREE.MeshBasicMaterial;
+      if (active) {
+        // Flickering intensely to simulate chaotic energy
+        auraMat.opacity = THREE.MathUtils.lerp(auraMat.opacity, 0.4 + Math.random() * 0.2, 0.2);
+        const pulse = 1 + Math.sin(state.clock.elapsedTime * 30) * 0.05;
+        auraRef.current.scale.set(pulse, 1, pulse);
+      } else {
+        auraMat.opacity = THREE.MathUtils.lerp(auraMat.opacity, 0, 0.1);
+      }
+    }
+
+    prevActive.current = active;
   });
 
+  const position = isMobile ? [0, -0.9, -2] : [2, -0.85, 0];
+
   return (
-    <group>
-      <pointLight 
-        ref={lightRef} 
-        position={[0, 20, -5]} 
-        color="#e0f2fe" 
-        distance={200} 
-        decay={1.5}
-      />
-      <ambientLight ref={ambientRef} color="#e0f2fe" intensity={0} />
+    <group position={position as [number, number, number]}>
+      {/* Expanding ground shockwave */}
+      <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
+        <ringGeometry args={[0.5, 1.0, 64]} />
+        <meshBasicMaterial color="#00f5ff" transparent opacity={0} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+      
+      {/* Trembling Power Aura Envelope */}
+      <mesh ref={auraRef} position={[0, 1.5, 0]}>
+        <cylinderGeometry args={[1, 1.5, 3, 32, 1, true]} />
+        <meshBasicMaterial color="#ff2d7e" transparent opacity={0} depthWrite={false} blending={THREE.AdditiveBlending} side={THREE.DoubleSide} />
+      </mesh>
     </group>
   );
 };
@@ -172,7 +211,7 @@ export const HeroScene = () => {
       {/* Rule §5: reduced from 2000 to 1000 */}
       <Stars radius={50} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
 
-      <LightningEffect active={isTaunting} />
+      <DramaticTauntEffect active={isTaunting} isMobile={isMobile} />
 
       <CharacterModel
         fbxPath={ANIMATIONS.hero}
