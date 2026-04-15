@@ -78,7 +78,7 @@ export const ProjectsScene = () => {
 
       <CharacterModel 
         fbxPath={ANIMATIONS.projects} 
-        position={[2, 0, 0]} 
+        position={[2, -0.8, 0]} 
         rotation={[0, -Math.PI / 4, 0]} 
       />
     </group>
