@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Stars, MeshReflectorMaterial, Grid } from '@react-three/drei';
 import * as THREE from 'three';
@@ -73,9 +73,47 @@ const PalmTree = ({ position, rotation }: { position: [number, number, number], 
   );
 };
 
+// Lightning Effect
+const LightningEffect = ({ active }: { active: boolean }) => {
+  const lightRef = useRef<THREE.PointLight>(null);
+  const ambientRef = useRef<THREE.AmbientLight>(null);
+  const flashTime = useRef(0);
+
+  useFrame((state, delta) => {
+    if (!lightRef.current || !ambientRef.current) return;
+
+    if (active) {
+      flashTime.current += delta * 20;
+      // High-frequency burst flickering pseudo-randomly
+      const flash = Math.pow(Math.sin(flashTime.current) * Math.cos(flashTime.current * 4.3), 4);
+      const targetIntensity = flash > 0.05 ? flash * 150 : 0;
+      
+      lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, targetIntensity, 0.5);
+      ambientRef.current.intensity = THREE.MathUtils.lerp(ambientRef.current.intensity, targetIntensity * 0.1, 0.5);
+    } else {
+      lightRef.current.intensity = THREE.MathUtils.lerp(lightRef.current.intensity, 0, 0.1);
+      ambientRef.current.intensity = THREE.MathUtils.lerp(ambientRef.current.intensity, 0, 0.1);
+    }
+  });
+
+  return (
+    <group>
+      <pointLight 
+        ref={lightRef} 
+        position={[0, 20, -5]} 
+        color="#e0f2fe" 
+        distance={200} 
+        decay={1.5}
+      />
+      <ambientLight ref={ambientRef} color="#e0f2fe" intensity={0} />
+    </group>
+  );
+};
+
 export const HeroScene = () => {
   const { viewport } = useThree();
   const isMobile = viewport.width < 5;
+  const [isTaunting, setIsTaunting] = useState(false);
 
   return (
     <group>
@@ -134,12 +172,15 @@ export const HeroScene = () => {
       {/* Rule §5: reduced from 2000 to 1000 */}
       <Stars radius={50} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
 
+      <LightningEffect active={isTaunting} />
+
       <CharacterModel
         fbxPath={ANIMATIONS.hero}
         secondaryFbxPath="/animations/standing-taunt-battlecry.fbx"
         position={isMobile ? [0, -1, -2] : [2, -0.9, 0]}
         rotation={[0, -Math.PI / 4, 0]}
         scale={isMobile ? 0.8 : 1}
+        onPhaseChange={(phase) => setIsTaunting(phase === 'secondary')}
       />
     </group>
   );

@@ -13,6 +13,7 @@ interface Props {
   rotation?: [number, number, number];
   scale?: number;
   inPlace?: boolean; // Strips XZ root motion to allow manual group translation
+  onPhaseChange?: (phase: 'primary' | 'secondary') => void;
 }
 
 export const CharacterModel = ({ 
@@ -22,7 +23,8 @@ export const CharacterModel = ({
   position = [0, 0, 0], 
   rotation = [0, Math.PI / 4, 0], 
   scale = 1.0,
-  inPlace = false
+  inPlace = false,
+  onPhaseChange
 }: Props) => {
   const groupRef = useRef<THREE.Group>(null);
   
@@ -113,6 +115,7 @@ export const CharacterModel = ({
     // Helper to start walk (plays once)
     const playWalk = () => {
       phaseRef.current = 'walk';
+      if (onPhaseChange) onPhaseChange('primary');
       tauntAction.fadeOut(0.4);
       walkAction.reset();
       walkAction.setLoop(THREE.LoopOnce, 1);
@@ -123,6 +126,7 @@ export const CharacterModel = ({
     // Helper to start taunt (plays once per call)
     const playTaunt = () => {
       phaseRef.current = 'taunt';
+      if (onPhaseChange) onPhaseChange('secondary');
       walkAction.fadeOut(0.4);
       tauntAction.reset();
       tauntAction.setLoop(THREE.LoopOnce, 1);
