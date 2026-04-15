@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Stars, MeshReflectorMaterial, Grid } from '@react-three/drei';
 import * as THREE from 'three';

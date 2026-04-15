@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useScrollSection } from '../hooks/useScrollSection';
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 
 export const AboutSection = () => {
