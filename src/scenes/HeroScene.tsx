@@ -1,153 +1,42 @@
 import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Stars, MeshReflectorMaterial } from '@react-three/drei';
+import { Stars, MeshReflectorMaterial, Grid } from '@react-three/drei';
 import * as THREE from 'three';
 import { CharacterModel } from './CharacterModel';
 import { ANIMATIONS } from '../utils/constants';
 
-/* ─── Animated glass dance-floor tile grid ─── */
-const TILE_COUNT = 30;        // reduced from 40 (Rule §5: fewer draw calls)
-const TILE_SIZE = 1.0;
-const GAP = 0.06;
-const GRID_EXTENT = TILE_COUNT * (TILE_SIZE + GAP) * 0.5;
+/* ─── Sleek Synthwave Grid Floor ─── */
+const SynthwaveGrid = () => (
+  <Grid
+    position={[0, -0.04, 0]} // Just above the reflector
+    args={[100, 100]}
+    cellSize={1.5}
+    cellThickness={1.5}
+    cellColor="#422575" // Deep purple/cyan mix
+    sectionSize={1.5}
+    sectionThickness={1.5}
+    sectionColor="#422575"
+    fadeDistance={40}
+    fadeStrength={1.5}
+  />
+);
 
-const DanceFloor = () => {
-  const meshRef = useRef<THREE.InstancedMesh>(null);
-  const colorArrayRef = useRef<Float32Array | null>(null);
-  const initializedRef = useRef(false);
-
-  // Pre-compute palette as flat RGB values to avoid .lerp() overhead per frame
-  const paletteRGB = useMemo(() => {
-    const colors = [
-      new THREE.Color('#ff2d7e'),
-      new THREE.Color('#00f5ff'),
-      new THREE.Color('#a855f7'),
-      new THREE.Color('#ff00aa'),
-      new THREE.Color('#6366f1'),
-      new THREE.Color('#0ea5e9'),
-    ];
-    // Store as flat [r,g,b, r,g,b, ...] for direct indexing
-    const flat = new Float32Array(colors.length * 3);
-    colors.forEach((c, i) => {
-      flat[i * 3] = c.r;
-      flat[i * 3 + 1] = c.g;
-      flat[i * 3 + 2] = c.b;
-    });
-    return { flat, count: colors.length };
-  }, []);
-
-  const { totalCount, positions } = useMemo(() => {
-    const total = TILE_COUNT * TILE_COUNT;
-    const pos = new Float32Array(total * 2); // flat [x,z, x,z, ...]
-    let idx = 0;
-    for (let row = 0; row < TILE_COUNT; row++) {
-      for (let col = 0; col < TILE_COUNT; col++) {
-        pos[idx++] = col * (TILE_SIZE + GAP) - GRID_EXTENT + (TILE_SIZE + GAP) * 0.5;
-        pos[idx++] = row * (TILE_SIZE + GAP) - GRID_EXTENT + (TILE_SIZE + GAP) * 0.5;
-      }
-    }
-    return { totalCount: total, positions: pos };
-  }, []);
-
-  // Initialize instance matrices + colour buffer after mount
-  useEffect(() => {
-    if (!meshRef.current || initializedRef.current) return;
-    const mesh = meshRef.current;
-    const dummy = new THREE.Object3D();
-    const colors = new Float32Array(totalCount * 3);
-
-    for (let i = 0; i < totalCount; i++) {
-      const x = positions[i * 2];
-      const z = positions[i * 2 + 1];
-      dummy.position.set(x, 0, z);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(i, dummy.matrix);
-
-      // initial colour — dark base
-      colors[i * 3] = 0.03;
-      colors[i * 3 + 1] = 0.004;
-      colors[i * 3 + 2] = 0.055;
-    }
-    mesh.instanceMatrix.needsUpdate = true;
-    colorArrayRef.current = colors;
-
-    mesh.geometry.setAttribute(
-      'color',
-      new THREE.InstancedBufferAttribute(colors, 3)
-    );
-
-    initializedRef.current = true;
-  }, [totalCount, positions]);
-
-  // Dark base RGB (avoid allocations)
-  const DARK_R = 0.03, DARK_G = 0.004, DARK_B = 0.055;
-
-  useFrame((state) => {
-    if (!meshRef.current || !colorArrayRef.current) return;
-    const t = state.clock.elapsedTime;
-    const colors = colorArrayRef.current;
-    const { flat, count: palLen } = paletteRGB;
-
-    for (let i = 0; i < totalCount; i++) {
-      const x = positions[i * 2];
-      const z = positions[i * 2 + 1];
-
-      // Concentric wave-ripple + diagonal sweep
-      const dist = Math.sqrt(x * x + z * z);
-      const wave1 = Math.sin(dist * 0.6 - t * 2.0) * 0.5 + 0.5;
-      const wave2 = Math.sin((x + z) * 0.4 + t * 1.5) * 0.5 + 0.5;
-      const blend = (wave1 * 0.6 + wave2 * 0.4) * 0.85;
-
-      // Palette index — direct flat array lookup, zero allocations
-      const palIdx = (Math.abs(Math.floor(x * 0.7 + z * 0.3 + t * 0.5)) % palLen) * 3;
-      const br = flat[palIdx], bg = flat[palIdx + 1], bb = flat[palIdx + 2];
-
-      // Inline lerp: dark → bright
-      colors[i * 3]     = DARK_R + (br - DARK_R) * blend;
-      colors[i * 3 + 1] = DARK_G + (bg - DARK_G) * blend;
-      colors[i * 3 + 2] = DARK_B + (bb - DARK_B) * blend;
-    }
-
-    const attr = meshRef.current.geometry.getAttribute('color');
-    if (attr) (attr as THREE.BufferAttribute).needsUpdate = true;
-  });
-
-  return (
-    <instancedMesh
-      ref={meshRef}
-      args={[undefined, undefined, totalCount]}
-      receiveShadow
-    >
-      <boxGeometry args={[TILE_SIZE, 0.08, TILE_SIZE]} />
-      {/* Rule §5: Downgraded from meshPhysicalMaterial (clearcoat = extra render pass) */}
-      <meshStandardMaterial
-        vertexColors
-        metalness={0.8}
-        roughness={0.12}
-        transparent
-        opacity={0.92}
-        envMapIntensity={1.2}
-      />
-    </instancedMesh>
-  );
-};
-
-/* ─── Reflective glass layer underneath the tiles ─── */
+/* ─── Reflective glass layer underneath the grid ─── */
 const GlassReflector = () => (
   <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]} receiveShadow>
     <planeGeometry args={[100, 100]} />
     <MeshReflectorMaterial
-      mirror={0.75}
-      blur={[300, 100]}
-      resolution={512}       // Rule §5: reduced from 1024
-      mixBlur={1}
-      mixStrength={40}
-      roughness={0.8}
+      mirror={1}
+      blur={[0, 0]} // Sharp reflections for the glossy tile look
+      resolution={512}
+      mixBlur={0}
+      mixStrength={10}
+      roughness={0.15} // Very glossy
       depthScale={1.2}
       minDepthThreshold={0.4}
       maxDepthThreshold={1.4}
-      color="#050010"
-      metalness={0.6}
+      color="#020005" // Pitch black base to emphasize lighting and reflections
+      metalness={0.9}
     />
   </mesh>
 );
@@ -229,7 +118,7 @@ export const HeroScene = () => {
 
       {/* ── Dance Floor ── */}
       <GlassReflector />
-      <DanceFloor />
+      <SynthwaveGrid />
 
       {/* Palm trees — shared materials */}
       <PalmTree position={[-4, 0, -5]} rotation={[0, 0, 0]} />
