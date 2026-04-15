@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
@@ -32,11 +32,15 @@ const ParticleSystem = () => {
   const pointsRef = useRef<THREE.Points>(null);
   
   const particlesCount = 500;
-  const positions = new Float32Array(particlesCount * 3);
-  
-  for(let i = 0; i < particlesCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 10;
-  }
+
+  // Rule §4: memoize positions so they aren't recreated every render
+  const positions = useMemo(() => {
+    const pos = new Float32Array(particlesCount * 3);
+    for (let i = 0; i < particlesCount * 3; i++) {
+      pos[i] = (Math.random() - 0.5) * 10;
+    }
+    return pos;
+  }, []);
 
   useFrame((state) => {
     if (pointsRef.current) {

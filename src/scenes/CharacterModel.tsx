@@ -6,6 +6,8 @@ import { FBXLoader, SkeletonUtils } from 'three-stdlib';
 
 interface Props {
   fbxPath: string;
+  /** Optional second FBX whose animation plays after the first finishes (loops). */
+  secondaryFbxPath?: string;
   idleSwayAmount?: number;
   position?: [number, number, number];
   rotation?: [number, number, number];
@@ -14,6 +16,7 @@ interface Props {
 
 export const CharacterModel = ({ 
   fbxPath, 
+  secondaryFbxPath,
   idleSwayAmount = 0.1, 
   position = [0, 0, 0], 
   rotation = [0, Math.PI / 4, 0], 
@@ -21,8 +24,14 @@ export const CharacterModel = ({
 }: Props) => {
   const groupRef = useRef<THREE.Group>(null);
   
-  // Load the FBX model
+  // Load the primary FBX model
   const fbx = useLoader(FBXLoader, fbxPath);
+
+  // Optionally load secondary FBX (for follow-up animation)
+  const secondaryFbx = useLoader(
+    FBXLoader,
+    secondaryFbxPath || fbxPath // fallback to primary if none provided
+  );
   
   // Clone to avoid mutation of cached objects and preserve SkinnedMesh hierarchy
   const clonedFbx = useMemo(() => {
@@ -44,16 +53,94 @@ export const CharacterModel = ({
     return clone;
   }, [fbx]);
 
-  const { actions, names } = useAnimations(fbx.animations, groupRef);
+  // Merge all animations: primary + secondary
+  const allAnimations = useMemo(() => {
+    const anims = [...fbx.animations];
+    if (secondaryFbxPath && secondaryFbx && secondaryFbx !== fbx) {
+      // Tag secondary animations so we can identify them
+      secondaryFbx.animations.forEach((clip, i) => {
+        const taggedClip = clip.clone();
+        taggedClip.name = `__secondary_${i}_${clip.name}`;
+        anims.push(taggedClip);
+      });
+    }
+    return anims;
+  }, [fbx, secondaryFbx, secondaryFbxPath]);
+
+  const { actions, names, mixer } = useAnimations(allAnimations, groupRef);
+
+  // State machine: walk(1x) → taunt(2x) → walk(1x) → taunt(2x) → …
+  const phaseRef = useRef<'walk' | 'taunt'>('walk');
+  const tauntCountRef = useRef(0);
 
   useEffect(() => {
-    if (names.length > 0) {
-      const action = actions[names[0]];
-      if (action) {
-        action.reset().fadeIn(0.5).play();
-      }
+    if (names.length === 0) return;
+
+    const primaryName = names.find(n => !n.startsWith('__secondary_'));
+    const secondaryName = names.find(n => n.startsWith('__secondary_'));
+    if (!primaryName || !actions[primaryName]) return;
+
+    const walkAction = actions[primaryName]!;
+
+    if (!secondaryFbxPath || !secondaryName || !actions[secondaryName]) {
+      // No secondary — just loop the primary forever
+      walkAction.reset().fadeIn(0.5).play();
+      return;
     }
-  }, [actions, names]);
+
+    const tauntAction = actions[secondaryName]!;
+
+    // Helper to start walk (plays once)
+    const playWalk = () => {
+      phaseRef.current = 'walk';
+      tauntAction.fadeOut(0.4);
+      walkAction.reset();
+      walkAction.setLoop(THREE.LoopOnce, 1);
+      walkAction.clampWhenFinished = true;
+      walkAction.fadeIn(0.4).play();
+    };
+
+    // Helper to start taunt (plays once per call)
+    const playTaunt = () => {
+      phaseRef.current = 'taunt';
+      walkAction.fadeOut(0.4);
+      tauntAction.reset();
+      tauntAction.setLoop(THREE.LoopOnce, 1);
+      tauntAction.clampWhenFinished = true;
+      tauntAction.fadeIn(0.4).play();
+    };
+
+    // Kick off the cycle with walk
+    phaseRef.current = 'walk';
+    tauntCountRef.current = 0;
+    walkAction.setLoop(THREE.LoopOnce, 1);
+    walkAction.clampWhenFinished = true;
+    walkAction.reset().fadeIn(0.5).play();
+
+    const onFinished = (e: { action: THREE.AnimationAction }) => {
+      if (e.action === walkAction && phaseRef.current === 'walk') {
+        // Walk finished → start taunt (1st of 2)
+        tauntCountRef.current = 0;
+        tauntCountRef.current++;
+        playTaunt();
+      } else if (e.action === tauntAction && phaseRef.current === 'taunt') {
+        // Taunt finished — played it tauntCountRef times so far
+        if (tauntCountRef.current < 2) {
+          tauntCountRef.current++;
+          playTaunt();
+        } else {
+          // 2 taunts done → back to walk
+          tauntCountRef.current = 0;
+          playWalk();
+        }
+      }
+    };
+
+    mixer.addEventListener('finished', onFinished);
+    return () => {
+      mixer.removeEventListener('finished', onFinished);
+    };
+  }, [actions, names, mixer, secondaryFbxPath]);
 
   useFrame((state) => {
     if (groupRef.current && idleSwayAmount > 0) {
