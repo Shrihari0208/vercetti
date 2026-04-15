@@ -1,8 +1,49 @@
 import { motion } from 'framer-motion';
 import { useScrollSection } from '../hooks/useScrollSection';
+import { useState, useRef, FormEvent } from 'react';
+import emailjs from '@emailjs/browser';
 
 export const AboutSection = () => {
   const ref = useScrollSection<HTMLElement>('about');
+  const formRef = useRef<HTMLFormElement>(null);
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const sendEmail = (e: FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    // Retrieve environment variables
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("EmailJS credentials are missing in your environment configuration.");
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      return;
+    }
+
+    emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+      .then(() => {
+        setSubmitStatus('success');
+        formRef.current?.reset();
+      })
+      .catch((error) => {
+        console.error('Failed to send email:', error);
+        setSubmitStatus('error');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        // Reset status message after a few seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      });
+  };
 
   return (
     <section id="about" ref={ref} className="min-h-screen flex items-center py-20 pb-32">
@@ -68,30 +109,51 @@ export const AboutSection = () => {
             
             <h3 className="text-2xl font-black uppercase tracking-wider mb-6 relative z-10">Get in Touch</h3>
             
-            <form className="space-y-4 relative z-10" onSubmit={(e) => e.preventDefault()}>
+            <form ref={formRef} className="space-y-4 relative z-10" onSubmit={sendEmail}>
               <div>
                 <input 
                   type="text" 
+                  name="user_name"
                   placeholder="Your Name" 
+                  required
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide"
                 />
               </div>
               <div>
                 <input 
                   type="email" 
+                  name="user_email"
                   placeholder="Your Email" 
+                  required
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide"
                 />
               </div>
               <div>
                 <textarea 
+                  name="message"
                   placeholder="Your Message..." 
                   rows={4}
+                  required
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide resize-none"
                 ></textarea>
               </div>
-              <button className="w-full py-4 bg-gradient-to-r from-brand-pink to-brand-purple rounded-lg font-bold uppercase tracking-widest hover:opacity-90 transition-opacity flex justify-center items-center neon-shadow-pink">
-                Send Message
+
+              {submitStatus === 'success' && (
+                <div className="text-green-400 text-sm font-mono tracking-wider text-center py-2 animate-pulse">
+                  ✓ Message sent successfully
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="text-red-400 text-sm font-mono tracking-wider text-center py-2">
+                  ✗ Failed to send message. Please check API keys.
+                </div>
+              )}
+
+              <button 
+                disabled={isSubmitting}
+                className="w-full py-4 bg-gradient-to-r from-brand-pink to-brand-purple rounded-lg font-bold uppercase tracking-widest hover:opacity-90 disabled:opacity-50 transition-opacity flex justify-center items-center neon-shadow-pink"
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </motion.div>
