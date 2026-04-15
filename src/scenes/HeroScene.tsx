@@ -94,6 +94,8 @@ export const HeroScene = () => {
         shadow-camera-near={0.5}
         shadow-camera-far={30}
         shadow-bias={-0.0005}
+
+      // fdff
       />
 
       {/* Neon accent lights — no shadows (Rule §5) */}
