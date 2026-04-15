@@ -26,16 +26,16 @@ export const AboutSection = () => {
             transition={{ delay: 0.2 }}
             className="text-white/60 leading-relaxed mb-10"
           >
-            I am a passionate software engineer blurring the line between code and art. With strong foundations in modern web technologies and a keen eye for aesthetics, I create high-performance applications that leave a lasting impression.
+            Frontend Developer with experience building responsive, accessible applications using React, Next.js, and Redux Toolkit. Skilled in RESTful APIs, modern JavaScript/TypeScript, and integrating tools like Google Maps and Supabase; deeply collaborative and committed to writing clean, SOLID, and DRY code.
           </motion.p>
 
           {/* Timeline */}
           <div className="space-y-6 relative border-l border-white/20 ml-3 pl-6">
             {[
-              { year: '2021', title: 'Started Journey', desc: 'Began learning web development self-taught.' },
-              { year: '2022', title: 'First Freelance', desc: 'Delivered initial commercial projects for local clients.' },
-              { year: '2023', title: 'Joined TechCorp', desc: 'Working as Frontend Developer on large scale apps.' },
-              { year: '2024', title: 'Creative Engineering', desc: 'Diving into WebGL, 3D, and immersive experiences.' }
+              { year: '2020', title: 'B.Sc. Agriculture (Hons)', desc: 'Started at College of Agriculture, Nagpur (Dr. PDKV).' },
+              { year: '2024', title: 'Graduation & Internship', desc: 'Graduated and joined Blue Digital Media as a Frontend Developer Intern, building CRM platforms for 60,000+ vendors.' },
+              { year: 'Sep 2024', title: 'React Developer', desc: 'Promoted to full-time React Developer. Developed the Abu Dhabi SC Events Portal and Snapit.ae UI.' },
+              { year: 'Present', title: 'Freelance & Full-Stack', desc: 'Crafting high-conversion landing pages and exploring AI-driven full-stack applications.' }
             ].map((item, idx) => (
               <motion.div 
                 key={item.year}

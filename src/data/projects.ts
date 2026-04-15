@@ -1,36 +1,36 @@
 export const PROJECTS_DATA = [
   {
     id: 'project-1',
-    title: 'Neon Odyssey',
-    description: 'A 3D browser-based infinite runner with synthwave aesthetics.',
-    tech: ['Three.js', 'React', 'Zustand'],
+    title: 'Abu Dhabi Sports Council Portal',
+    description: 'An event booking and approval platform for the Government of Abu Dhabi featuring Google Maps integration and English/Arabic translation.',
+    tech: ['React', 'Vite', 'Tailwind', 'Framer Motion'],
     github: '#',
     live: '#',
     color: 'pink'
   },
   {
     id: 'project-2',
-    title: 'OmniAI Dashboard',
-    description: 'A full-stack dashboard for managing AI workflows and prompt engineering.',
-    tech: ['Next.js', 'Tailwind', 'Postgres'],
+    title: 'Elsopro CRM & Snapit.ae',
+    description: 'Highly scalable CRM platform front-end supporting 60,000+ vendors alongside responsive UI systems for Snapit.ae.',
+    tech: ['React', 'Redux Toolkit', 'Tailwind'],
     github: '#',
-    live: '#',
+    live: 'https://elsopro.com',
     color: 'cyan'
   },
   {
     id: 'project-3',
-    title: 'Pulse E-Commerce',
-    description: 'High performance modern storefront with advanced framer motion animations.',
-    tech: ['React', 'Redux', 'Stripe'],
+    title: 'Blogg App',
+    description: 'End-to-end full-stack app with JWT-based authentication, CRUD operations for posts, and a responsive Material-UI design.',
+    tech: ['MERN Stack', 'Material-UI', 'Render'],
     github: '#',
     live: '#',
     color: 'purple'
   },
   {
     id: 'project-4',
-    title: 'DevSpace Connect',
-    description: 'Social networking platform for developers to share code snippets and collaborate.',
-    tech: ['MERN', 'Socket.io', 'JWT'],
+    title: 'Blabber Bot AI',
+    description: 'An AI-driven chatbot utilizing OpenAI API for text summarization, generation, and image creation capabilities.',
+    tech: ['React', 'OpenAI API', 'Node.js'],
     github: '#',
     live: '#',
     color: 'orange'
