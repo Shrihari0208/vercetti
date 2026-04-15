@@ -37,8 +37,8 @@ export const HeroScene = () => {
   return (
     <group>
       <fog attach="fog" args={['#1a0520', 5, 20]} />
-      <hemisphereLight args={['#ff8c00', '#1a0520', 0.8]} />
-      <directionalLight position={[5, 10, 5]} intensity={1.5} color="#ff8c00" castShadow />
+      <hemisphereLight args={['#ffffff', '#0b0312', 0.3]} />
+      <directionalLight position={[5, 10, 5]} intensity={1.2} color="#ffffff" castShadow />
       
       {/* Neon pink point light */}
       <pointLight position={[2, 2, 2]} intensity={2} color="#ff2d7e" />
@@ -79,7 +79,7 @@ export const HeroScene = () => {
 
       <CharacterModel 
         fbxPath={ANIMATIONS.hero} 
-        position={[2, 0, 0]} 
+        position={[2, -1.2, 0]} 
         rotation={[0, -Math.PI / 4, 0]} 
       />
     </group>
