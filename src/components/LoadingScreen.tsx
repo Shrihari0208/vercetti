@@ -64,6 +64,18 @@ export const LoadingScreen = () => {
             />
           </div>
           <div className="mt-4 text-white/50 text-sm font-mono">{Math.min(progress, 100)}%</div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="mt-12 text-center px-6 max-w-sm"
+          >
+            <p className="text-white/40 text-xs tracking-wider uppercase leading-relaxed">
+              For the best cinematic 3D experience, <br/>
+              <span className="text-brand-cyan">please view on a laptop or larger screen.</span>
+            </p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
