@@ -8,6 +8,7 @@ import { useStore } from './store';
 import { HeroSection } from './sections/HeroSection';
 import { SkillsSection } from './sections/SkillsSection';
 import { ProjectsSection } from './sections/ProjectsSection';
+import { BlogsSection } from './sections/BlogsSection';
 import { AboutSection } from './sections/AboutSection';
 import { CanvasContainer } from './scenes/CanvasContainer';
 
@@ -64,10 +65,11 @@ function App() {
             <Navbar />
           </div>
           
-          <main className="pointer-events-auto flex-grow flex flex-col">
+          <main className="pointer-events-auto flex-grow flex flex-col relative z-10">
             <HeroSection />
             <SkillsSection />
             <ProjectsSection />
+            <BlogsSection />
             <AboutSection />
           </main>
           

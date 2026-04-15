@@ -1,5 +1,5 @@
 import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { CharacterModel } from './CharacterModel';
 import { ANIMATIONS } from '../utils/constants';

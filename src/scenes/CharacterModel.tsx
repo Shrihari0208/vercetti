@@ -12,6 +12,7 @@ interface Props {
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: number;
+  inPlace?: boolean; // Strips XZ root motion to allow manual group translation
 }
 
 export const CharacterModel = ({ 
@@ -20,7 +21,8 @@ export const CharacterModel = ({
   idleSwayAmount = 0.1, 
   position = [0, 0, 0], 
   rotation = [0, Math.PI / 4, 0], 
-  scale = 1.0 
+  scale = 1.0,
+  inPlace = false
 }: Props) => {
   const groupRef = useRef<THREE.Group>(null);
   
@@ -55,17 +57,35 @@ export const CharacterModel = ({
 
   // Merge all animations: primary + secondary
   const allAnimations = useMemo(() => {
-    const anims = [...fbx.animations];
+    const processClip = (clip: THREE.AnimationClip) => {
+      const newClip = clip.clone();
+      if (inPlace) {
+        newClip.tracks.forEach(t => {
+          if (t.name.includes('mixamorigHips.position')) {
+            // Keep Y (up/down bobbing) but zero out X and Z (translation)
+            for (let i = 0; i < t.values.length; i += 3) {
+              const initialX = t.values[0];
+              const initialZ = t.values[2];
+              t.values[i] = initialX; // Lock X to initial
+              t.values[i + 2] = initialZ; // Lock Z to initial
+            }
+          }
+        });
+      }
+      return newClip;
+    };
+
+    const anims = fbx.animations.map(processClip);
     if (secondaryFbxPath && secondaryFbx && secondaryFbx !== fbx) {
       // Tag secondary animations so we can identify them
       secondaryFbx.animations.forEach((clip, i) => {
-        const taggedClip = clip.clone();
+        const taggedClip = processClip(clip);
         taggedClip.name = `__secondary_${i}_${clip.name}`;
         anims.push(taggedClip);
       });
     }
     return anims;
-  }, [fbx, secondaryFbx, secondaryFbxPath]);
+  }, [fbx, secondaryFbx, secondaryFbxPath, inPlace]);
 
   const { actions, names, mixer } = useAnimations(allAnimations, groupRef);
 

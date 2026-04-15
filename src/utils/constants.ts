@@ -2,6 +2,7 @@ export const NAV_LINKS = [
   { id: 'hero', label: 'Home' },
   { id: 'skills', label: 'Arsenal' },
   { id: 'projects', label: 'Projects' },
+  { id: 'blogs', label: 'Timeline' },
   { id: 'about', label: 'About' },
 ];
 
@@ -9,6 +10,7 @@ export const ANIMATIONS = {
   hero: '/animations/strut-walking.fbx',
   skills: '/animations/aerial-evade.fbx',
   projects: '/animations/stand-to-roll.fbx',
+  blogs: '/animations/Moonwalk.fbx',
   about: '/animations/samba-dancing.fbx',
 };
 

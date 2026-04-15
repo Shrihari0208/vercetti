@@ -8,6 +8,7 @@ import { Suspense, lazy } from 'react';
 const HeroScene = lazy(() => import('./HeroScene').then(m => ({ default: m.HeroScene })));
 const SkillsScene = lazy(() => import('./SkillsScene').then(m => ({ default: m.SkillsScene })));
 const ProjectsScene = lazy(() => import('./ProjectsScene').then(m => ({ default: m.ProjectsScene })));
+const BlogsScene = lazy(() => import('./BlogsScene').then(m => ({ default: m.BlogsScene })));
 const AboutScene = lazy(() => import('./AboutScene').then(m => ({ default: m.AboutScene })));
 
 export const CanvasContainer = () => {
@@ -19,6 +20,7 @@ export const CanvasContainer = () => {
       case 'hero': return <HeroScene />;
       case 'skills': return <SkillsScene />;
       case 'projects': return <ProjectsScene />;
+      case 'blogs': return <BlogsScene />;
       case 'about': return <AboutScene />;
       default: return <HeroScene />;
     }

@@ -66,6 +66,9 @@ export const HeroSection = () => {
             <a href="#projects" className="px-8 py-3 bg-brand-pink text-white rounded-md font-bold uppercase tracking-wider hover:bg-brand-pink/80 transition-all neon-shadow-pink hover:-translate-y-1">
               View Projects
             </a>
+            <a href="/resume.pdf" download="Shrihari_Deshmukh_Resume.pdf" className="px-8 py-3 bg-gradient-to-r from-brand-cyan/20 to-transparent border border-brand-cyan text-brand-cyan rounded-md font-bold uppercase tracking-wider hover:bg-brand-cyan/20 hover:border-white transition-all hover:-translate-y-1 backdrop-blur-sm neon-shadow-cyan">
+              Download CV
+            </a>
             <a href="#about" className="px-8 py-3 bg-white/5 border border-white/20 text-white rounded-md font-bold uppercase tracking-wider hover:bg-white/10 hover:border-white/40 transition-all hover:-translate-y-1 backdrop-blur-sm">
               Contact Me
             </a>
