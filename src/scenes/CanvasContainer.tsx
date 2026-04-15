@@ -42,8 +42,8 @@ export const CanvasContainer = () => {
           {/* Removed <Preload all /> — it defeats lazy loading (Rule §3 + §4) */}
         </Suspense>
         <OrbitControls 
-          enableZoom={true} 
-          enablePan={true}
+          enableZoom={false} 
+          enablePan={false}
           maxPolarAngle={Math.PI * 0.55}
           minDistance={2}
           maxDistance={10}

@@ -11,14 +11,39 @@ import { ProjectsSection } from './sections/ProjectsSection';
 import { AboutSection } from './sections/AboutSection';
 import { CanvasContainer } from './scenes/CanvasContainer';
 
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+
 function App() {
   const setLoaded = useStore((state) => state.setLoaded);
 
   useEffect(() => {
+    // Smooth scrolling with Lenis
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Initial load timer
     const timer = setTimeout(() => {
       setLoaded(true);
     }, 2000);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(timer);
+      lenis.destroy();
+    };
   }, [setLoaded]);
 
   return (
