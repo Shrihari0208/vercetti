@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useScrollSection } from '../hooks/useScrollSection';
 import { useState, useRef, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
+import { EMAIL_JS, CONTACT_INFO } from '../utils/constants';
 
 export const AboutSection = () => {
   const ref = useScrollSection<HTMLElement>('about');
@@ -17,18 +18,9 @@ export const AboutSection = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      console.error("EmailJS credentials are missing in your environment configuration.");
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      return;
-    }
-
-    emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+    emailjs.sendForm(EMAIL_JS.serviceId, EMAIL_JS.templateId, formRef.current, {
+      publicKey: EMAIL_JS.publicKey,
+    })
       .then(() => {
         setSubmitStatus('success');
         formRef.current?.reset();
@@ -118,37 +110,53 @@ export const AboutSection = () => {
             transition={{ delay: 0.3 }}
             className="card p-8"
           >
-            <p className="eyebrow mb-2">Contact</p>
-            <h3 className="text-xl font-bold tracking-wide mb-6 text-[#f0ede8]">Send a message</h3>
-            
+            <p className="eyebrow mb-2">Contact us</p>
+            <h3 className="text-xl font-bold tracking-wide mb-6 text-[#f0ede8]">Hire me / Get in touch</h3>
+
+            {/* Input `name`s must match EmailJS template vars: {{from_name}}, {{from_email}}, {{contact}}, {{message}} */}
             <form ref={formRef} className="space-y-4" onSubmit={sendEmail}>
               <input 
                 type="text" 
-                name="user_name"
+                name="from_name"
                 placeholder="Your name" 
                 required
+                autoComplete="name"
                 className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm"
               />
               <input 
                 type="email" 
-                name="user_email"
+                name="from_email"
                 placeholder="Your email" 
                 required
+                autoComplete="email"
+                className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm"
+              />
+              <input
+                type="text"
+                name="contact"
+                placeholder="Phone or WhatsApp (optional)"
+                autoComplete="tel"
                 className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm"
               />
               <textarea 
                 name="message"
-                placeholder="What are you building?" 
+                placeholder="Your message" 
                 rows={4}
                 required
                 className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm resize-none"
               ></textarea>
 
               {submitStatus === 'success' && (
-                <p className="text-[#4ade80] text-xs font-mono">Message sent.</p>
+                <p className="text-[#4ade80] text-xs font-mono">Thanks — message sent.</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-400 text-xs font-mono">Failed to send — check API keys.</p>
+                <p className="text-red-400 text-xs font-mono">
+                  Could not send — try again or email{' '}
+                  <a href={`mailto:${CONTACT_INFO.email}`} className="underline text-[#737373] hover:text-[#f0ede8]">
+                    {CONTACT_INFO.email}
+                  </a>
+                  .
+                </p>
               )}
 
               <button 

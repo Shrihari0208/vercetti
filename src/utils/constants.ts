@@ -14,8 +14,20 @@ export const ANIMATIONS = {
   about: '/animations/samba-dancing.fbx',
 };
 
+/** Contact & profile URLs from LatextFile resume */
 export const CONTACT_INFO = {
-  email: 'shriharideshmukh@example.com',
-  github: 'https://github.com/shriharideshmukh',
-  linkedin: 'https://linkedin.com/in/shriharideshmukh',
+  email: 'shriharideshmukh382@gmail.com',
+  github: 'https://github.com/Shrihari0208/',
+  linkedin: 'https://www.linkedin.com/in/shrihari-deshmukh-6373b9248/',
+  portfolio: 'https://shrihariportfolio.netlify.app/',
 };
+
+/**
+ * EmailJS (browser). Public key is expected in client code; limit abuse via EmailJS dashboard (domains, blocklist).
+ * Form field names in AboutSection must match template: from_name, from_email, contact, message
+ */
+export const EMAIL_JS = {
+  serviceId: 'service_cq4olh2',
+  templateId: 'template_k7qqbyj',
+  publicKey: 'h8dGQ74tZk8zLsE5Y',
+} as const;

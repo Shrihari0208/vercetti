@@ -44,13 +44,38 @@ export const ProjectsSection = () => {
                   ))}
                 </div>
 
-                <div className="flex gap-4 border-t border-[#222] pt-3">
-                  <a href={project.github} className="text-xs text-[#737373] hover:text-[#f0ede8] transition-colors">
-                    Code →
-                  </a>
-                  <a href={project.live} className="text-xs text-[#737373] hover:text-[#f0ede8] transition-colors">
-                    Live →
-                  </a>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-[#222] pt-3">
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-[#737373] hover:text-[#f0ede8] transition-colors"
+                    >
+                      Live →
+                    </a>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-[#737373] hover:text-[#f0ede8] transition-colors"
+                    >
+                      Code →
+                    </a>
+                  )}
+                  {project.extraLinks?.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-[#737373] hover:text-[#f0ede8] transition-colors"
+                    >
+                      {link.label} →
+                    </a>
+                  ))}
                 </div>
               </motion.div>
             ))}

@@ -1,0 +1,127 @@
+% LaTeX resume for Shrihari Shrikant Deshmukh
+\documentclass[11pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{fontawesome}
+\setlist[itemize]{nosep, leftmargin=*}
+\setlength{\parskip}{0pt}
+\usepackage{titlesec}
+
+% Section formatting with reduced spacing
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{1ex}{0.5ex}
+
+\begin{document}
+
+%======== Header ========
+\begin{center}
+  {\LARGE \textbf{Shrihari Shrikant Deshmukh}} \\
+  Wardha, Maharashtra, 442001 \\
+  \href{mailto:shriharideshmukh382@gmail.com}{\faEnvelope{} shriharideshmukh382@gmail.com} $\vert$
+  \href{https://www.linkedin.com/in/shrihari-deshmukh-6373b9248/}{\faLinkedin{} LinkedIn} $\vert$
+  \href{https://github.com/Shrihari0208/}{\faGithub{} GitHub} $\vert$
+  \href{https://shrihariportfolio.netlify.app/}{\faGlobe{} Portfolio}
+\end{center}
+
+%======== Professional Summary ========
+\section*{Professional Summary}
+Results-driven Frontend Developer with over one year of professional experience engineering responsive, accessible, and high-performance web and mobile applications using React, Next.js, React Native, and Redux Toolkit. Proven track record delivering production-grade fintech platforms, government portals, SaaS applications, and published Play Store releases. Proficient in TypeScript, Tailwind CSS, RESTful APIs, Docker, and cloud deployments; committed to scalable architecture and SOLID, DRY engineering principles.
+
+%======== Technical Skills ========
+\section*{Technical Skills}
+\begin{itemize}
+  \item \textbf{Frontend \& Mobile:} React, React Native, Next.js, Redux Toolkit, Tailwind CSS, Material-UI, Bootstrap, Framer Motion, Responsive Design
+  \item \textbf{Languages:} JavaScript (ES6+), TypeScript, Python, C++
+  \item \textbf{Backend \& APIs:} Node.js, Express.js, RESTful APIs, GraphQL, JWT, OAuth 2.0, PostgreSQL, Prisma, Docker, Supabase, Firebase, MongoDB
+  \item \textbf{Deployment \& DevOps:} Vercel, Netlify, Render, AWS Lightsail, Git, GitHub, CI/CD Pipelines, Google Play Console
+  \item \textbf{Concepts:} Data Structures \& Algorithms, OOP, SOLID Principles, DRY, DBMS, Operating Systems, Computer Networks
+\end{itemize}
+
+%======== Professional Experience ========
+\section*{Professional Experience}
+
+\textbf{Meon Technologies} \hfill \emph{June 2025 -- Present}\\
+\emph{Frontend Developer}
+\begin{itemize}
+  \item Architected and delivered multiple products from the ground up, including OCR Admin, Super Admin, Chatbot Admin, NCD IPO end-to-end platform, and a Central Tool for cross-product company management.
+  \item Engineered fintech workflows across IPO processing, demat account closure, KYC/re-KYC verification, PDF Editor, and developer tools, ensuring reliable and consistent user experiences.
+  \item Optimized the Meon public website for SEO, Core Web Vitals, and accessibility, improving page performance and organic discoverability.
+  \item Triaged and resolved production bugs across legacy jQuery/HTML/CSS codebases and modern React-based applications, reducing critical issue backlog.
+  \item Implemented scalable UI architecture leveraging React, Vite, Next.js, Tailwind CSS, and Redux Toolkit for centralized state management.
+  \item Collaborated cross-functionally to build internal admin dashboards that streamlined operations and improved product management workflows.
+\end{itemize}
+
+\textbf{Blue Digital Media, Noida, UP} \hfill \emph{September 2024 -- June 2025}\\
+\emph{React Developer}
+\begin{itemize}
+  \item Delivered a fully responsive, accessible UI for Snapit.ae using React, Vite, Tailwind CSS, and Framer Motion.
+  \item Engineered the Abu Dhabi Sports Council Events Portal, a government-grade event booking and approval platform featuring advanced search with filters and pagination, Google Maps integration, and a bilingual English/Arabic language switcher.
+  \item Improved application performance and cross-browser compatibility by diagnosing and resolving layout, styling, and rendering issues.
+  \item Authored custom React hooks and Redux Toolkit state management patterns, consistently adhering to SOLID and DRY principles.
+  \item Integrated OAuth 2.0 authentication via Google and Facebook, streamlining user onboarding and login flows.
+  \item Participated in Agile sprints to refactor legacy codebases and enforce modern development standards across the team.
+\end{itemize}
+
+\textbf{Blue Digital Media (Remote)} \hfill \emph{August 2024 -- September 2024}\\
+\emph{Frontend Developer Intern}
+\begin{itemize}
+  \item Developed the Elsopro.com CRM platform frontend serving 60{,}000+ vendors using React, Tailwind CSS, and Redux Toolkit, with a focus on scalability and maintainability.
+  \item Implemented interactive UI animations with Framer Motion to enhance user engagement and interface responsiveness.
+  \item Integrated Google Maps API to power dynamic, location-based vendor search functionality.
+  \item Delivered a fully responsive interface on schedule, improving overall platform usability and accessibility.
+\end{itemize}
+
+%======== Projects \& Freelancing ========
+\section*{Projects \& Freelancing}
+
+\textbf{Bloggy} \hfill \href{https://bloggy-x9yf.onrender.com/}{Live} $\vert$ \href{https://github.com/Harry-Hunter23/Bloggy}{GitHub}
+\begin{itemize}
+  \item Built a full-stack blogging application with JWT-based authentication, full CRUD post management, and a responsive UI using React and Material-UI; deployed end-to-end on Render.
+\end{itemize}
+
+\textbf{Blabber Bot} \hfill \href{https://main--blabberbot.netlify.app/}{Live} $\vert$ \href{https://github.com/Harry-Hunter23/BlabberBot}{GitHub}
+\begin{itemize}
+  \item Engineered an AI-powered chatbot integrating the OpenAI API for text summarization, content generation, and image creation; deployed frontend on Netlify and backend on Render.
+\end{itemize}
+
+\textbf{Client Websites}
+\begin{itemize}
+  \item Designed and developed high-conversion, responsive landing pages for clients including
+    \href{https://www.services.bluedigital.co.in/}{services.bluedigital.co.in},
+    \href{http://vertexgridsystems.com/}{vertexgridsystems.com}, and
+    \href{https://amhtourism.com/}{amhtourism.com} -- a full tourism portal featuring interactive maps, dynamic itinerary planners, and responsive media galleries to drive visitor engagement.
+\end{itemize}
+
+%======== Personal Projects ========
+\section*{Personal Projects}
+
+\textbf{Sanjana} \hfill \emph{Google Play}
+\begin{itemize}
+  \item Shipped \textbf{Sanjana}, an AI companion mobile application where users chat with configurable personas; published on Google Play.
+  \item Built the native client with \textbf{React Native} and engineered the backend using \textbf{Node.js}, \textbf{Express}, \textbf{Prisma}, and \textbf{PostgreSQL}, containerized with \textbf{Docker}.
+  \item Deployed backend services on \textbf{AWS Lightsail}; designed APIs and persistence for conversational flows and persona-driven chat experiences.
+\end{itemize}
+
+\textbf{Dcoify} \hfill \href{https://dcoify.vercel.app/}{Live} $\vert$ \href{https://github.com/Shrihari0208/Dcoify}{GitHub}
+\begin{itemize}
+  \item Built a production-ready SaaS application using Next.js, Tailwind CSS, shadcn/ui, PostgreSQL, Prisma, Node.js, and Express.js.
+  \item Implemented multi-factor authentication (MFA) with backup key recovery to strengthen account security.
+  \item Added multilingual support and bring-your-own API key (BYOK) functionality for flexible, user-controlled configuration.
+  \item Integrated Lemon Squeezy for secure payment processing and subscription-based monetization.
+\end{itemize}
+
+\textbf{VedAI} \hfill \href{https://vedai-nextjs.vercel.app/}{Live} $\vert$ \href{https://github.com/Shrihari0208/VedaiNextjs}{GitHub}
+\begin{itemize}
+  \item Developed a full-stack AI-focused web application with Next.js, Tailwind CSS, shadcn/ui, PostgreSQL, Prisma, Node.js, and Express.js.
+  \item Implemented MFA with backup key support, multilingual accessibility, BYOK functionality, and Lemon Squeezy payment integration for premium access workflows.
+\end{itemize}
+
+%======== Education ========
+\section*{Education}
+\begin{itemize}
+  \item \textbf{B.Sc. Agriculture (Honours)}, College of Agriculture, Nagpur (Dr. PDKV) \hfill 2020 -- 2024
+\end{itemize}
+
+\vfill
+\end{document}
