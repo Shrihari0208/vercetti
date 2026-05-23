@@ -27,7 +27,7 @@ export const CONTACT_INFO = {
  * Form field names in AboutSection must match template: from_name, from_email, contact, message
  */
 export const EMAIL_JS = {
-  serviceId: 'service_cq4olh2',
+  serviceId: 'service_43ebznb',
   templateId: 'template_k7qqbyj',
   publicKey: 'uZ4k-RRHx39PQ1sG5',
 } as const;
