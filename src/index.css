@@ -1,57 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #06000f;
+  /* Lean dark palette — one warm accent, no competing neons */
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-text: #f0ede8;
+  --color-muted: #737373;
+  --color-border: #222222;
+  --color-accent: #e8d5b0;
+
+  /* Keep pink/cyan available but as hints, not the identity */
   --color-brand-pink: #ff2d7e;
   --color-brand-cyan: #00f5ff;
-  --color-brand-purple: #a855f7;
-  --color-brand-orange: #ff8c00;
 
   --font-lexend: "Lexend", sans-serif;
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg;
-  }
-  
-  .glass-pink {
-    @apply bg-brand-pink/5 backdrop-blur-md border border-brand-pink/20 shadow-[0_0_15px_rgba(255,45,126,0.3)];
+  /* Clean surface — no blur, no glow */
+  .card {
+    @apply bg-[#111] border border-[#222] rounded-xl;
   }
 
-  .glass-cyan {
-    @apply bg-brand-cyan/5 backdrop-blur-md border border-brand-cyan/20 shadow-[0_0_15px_rgba(0,245,255,0.3)];
+  .card-hover {
+    @apply hover:border-white/30 hover:-translate-y-1 transition-all duration-200;
   }
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-pink via-brand-purple to-brand-cyan;
+  /* Status badge — only place pink is used */
+  .status-badge {
+    @apply flex items-center gap-2 border border-white/10 rounded px-3 py-1.5 w-max;
   }
 
-  .neon-shadow-pink {
-    box-shadow: 0 0 10px rgba(255, 45, 126, 0.5), 0 0 20px rgba(255, 45, 126, 0.3);
+  /* Subtle text accent for labels */
+  .eyebrow {
+    @apply text-[#737373] uppercase tracking-widest text-xs font-mono;
   }
-  
-  .neon-shadow-cyan {
-    box-shadow: 0 0 10px rgba(0, 245, 255, 0.5), 0 0 20px rgba(0, 245, 255, 0.3);
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-[#f0ede8] text-[#0a0a0a] border border-[#f0ede8]
+    px-5 py-2.5 rounded text-sm font-medium tracking-wide
+    hover:-translate-y-0.5 transition-transform duration-150;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-transparent text-[#f0ede8] border border-[#333]
+    px-5 py-2.5 rounded text-sm font-medium tracking-wide
+    hover:border-white/40 hover:-translate-y-0.5 transition-all duration-150;
   }
 }
 
 html {
   scroll-behavior: smooth;
-  /* Prevent scrollbars from popping in and out */
   overflow-y: scroll;
 }
 
 body {
-  /* Hide the scrollbar physically but keep functionality */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
-body::-webkit-scrollbar {
-  display: none; /* WebKit */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Ensure canvas does not block scroll */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 canvas {
   touch-action: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -8,31 +8,31 @@ export interface BlogPost {
 
 export const BLOGS_DATA: BlogPost[] = [
   {
-    id: "grad-2024",
-    date: "June 2024",
-    title: "Graduation & A New Beginning",
-    content: "Graduated with a B.Sc. Agriculture (Hons) from Dr. PDKV. While my background was rooted in agriculture, my absolute passion for technology and building digital experiences led me to formally pivot into software engineering. The real journey started here.",
-    tags: ["Milestone", "Graduation", "Pivot"]
+    id: 'bsc-2024',
+    date: 'June 2024',
+    title: 'Graduated & Made the Switch',
+    content: 'Finished my B.Sc. and moved into software full-time. The pivot into frontend wasn\'t an overnight decision — I\'d been building things on the side for a while. Formalizing it felt like catching up to where I already was.',
+    tags: ['Milestone', 'Career']
   },
   {
-    id: "internship-bd",
-    date: "July 2024",
-    title: "Joining Blue Digital Media as an Intern",
-    content: "Started my first professional gig as a Frontend Developer Intern. My primary task was working on an extensive CRM building UI components using React, Redux Toolkit, and Material-UI. Seeing code I wrote impact over 60,000 vendors was mind-blowing.",
-    tags: ["Internship", "React", "CRM"]
+    id: 'intern-aug-2024',
+    date: 'August 2024',
+    title: 'Frontend Intern — Blue Digital Media',
+    content: 'First professional role. Built the Elsopro.com CRM front-end — React, Redux Toolkit, Tailwind — used by 60,000+ vendors. Integrated Google Maps for vendor search. Shipped a full responsive interface within the first month.',
+    tags: ['Internship', 'React', 'CRM']
   },
   {
-    id: "react-dev-promotion",
-    date: "September 2024",
-    title: "Stepping Up: Full-Time React Developer",
-    content: "Promoted to a full-time Dev! I led the frontend architecture for the Abu Dhabi Sports Council (ADSC) Events Portal and Snapit.ae UI. Implemented complex data tables, dynamic CMS integration, and ensured responsive precision using Tailwind CSS.",
-    tags: ["Career", "Frontend", "TailwindCSS"]
+    id: 'react-dev-sep-2024',
+    date: 'September 2024',
+    title: 'Promoted to React Developer',
+    content: 'Moved to full-time. Led front-end for the Abu Dhabi Sports Council Events Portal — booking/approval flows, bilingual RTL layouts, Google Maps. Also shipped the full Snapit.ae UI with Framer Motion animations.',
+    tags: ['React', 'Government Portal', 'Blue Digital Media']
   },
   {
-    id: "freelance-fullstack",
-    date: "December 2024 - Present",
-    title: "Freelancing & Exploring Full-Stack AI",
-    content: "Expanded my horizons into freelance work, crafting super high-conversion landing pages and delving into backend systems (Node.js, Express, Supabase). Currently focused on building Blabber Bot AI—my experimental AI-driven full-stack companion.",
-    tags: ["Freelance", "FullStack", "AI"]
+    id: 'meon-jun-2025',
+    date: 'June 2025 – Present',
+    title: 'Frontend Developer — Meon Technologies',
+    content: 'Architecting fintech products from scratch: OCR Admin, Super Admin, Chatbot Admin, NCD IPO platform, and a Central Tool for cross-product management. Also optimizing the public site for Core Web Vitals and SEO.',
+    tags: ['Fintech', 'Meon Technologies', 'Current']
   }
 ];

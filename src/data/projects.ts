@@ -1,38 +1,50 @@
 export const PROJECTS_DATA = [
   {
-    id: 'project-1',
-    title: 'Abu Dhabi Sports Council Portal',
-    description: 'An event booking and approval platform for the Government of Abu Dhabi featuring Google Maps integration and English/Arabic translation.',
-    tech: ['React', 'Vite', 'Tailwind', 'Framer Motion'],
+    id: 'sanjana',
+    title: 'Sanjana — AI Companion App',
+    description: 'Published on Google Play. Users chat with configurable AI personas. Built with React Native (client), Node.js + Express + Prisma + PostgreSQL (backend), containerized with Docker and deployed on AWS Lightsail.',
+    tech: ['React Native', 'Node.js', 'PostgreSQL', 'Prisma', 'Docker', 'AWS Lightsail'],
     github: '#',
     live: '#',
-    color: 'pink'
   },
   {
-    id: 'project-2',
+    id: 'dcoify',
+    title: 'Dcoify — SaaS Platform',
+    description: 'Production SaaS with MFA + backup key recovery, multilingual support, BYOK (bring-your-own API key), and Lemon Squeezy subscription payments. Built with Next.js, Tailwind, shadcn/ui, PostgreSQL, and Prisma.',
+    tech: ['Next.js', 'PostgreSQL', 'Prisma', 'Lemon Squeezy', 'shadcn/ui'],
+    github: '#',
+    live: '#',
+  },
+  {
+    id: 'adsc',
+    title: 'Abu Dhabi Sports Council Portal',
+    description: 'Government event portal for ADSC. Built booking and approval flows, Google Maps venue selection, advanced search with filters/pagination, and bilingual English/Arabic (RTL) layouts. Served real government traffic.',
+    tech: ['React', 'Vite', 'Tailwind', 'Redux Toolkit', 'Google Maps API'],
+    github: '#',
+    live: '#',
+  },
+  {
+    id: 'elsopro',
     title: 'Elsopro CRM & Snapit.ae',
-    description: 'Highly scalable CRM platform front-end supporting 60,000+ vendors alongside responsive UI systems for Snapit.ae.',
-    tech: ['React', 'Redux Toolkit', 'Tailwind'],
+    description: 'CRM front-end for 60,000+ vendors — scalable data tables, filter workflows, role-based views with Redux Toolkit. Also built the full responsive UI for Snapit.ae with React, Vite, Tailwind, and Framer Motion.',
+    tech: ['React', 'Redux Toolkit', 'Tailwind', 'Framer Motion'],
     github: '#',
     live: 'https://elsopro.com',
-    color: 'cyan'
   },
   {
-    id: 'project-3',
-    title: 'Blogg App',
-    description: 'End-to-end full-stack app with JWT-based authentication, CRUD operations for posts, and a responsive Material-UI design.',
-    tech: ['MERN Stack', 'Material-UI', 'Render'],
+    id: 'vedai',
+    title: 'VedAI — Full-Stack AI App',
+    description: 'AI-focused web app with MFA, multilingual support, BYOK, and Lemon Squeezy payments. Same robust stack as Dcoify — built as a separate product with its own AI workflow focus.',
+    tech: ['Next.js', 'PostgreSQL', 'Prisma', 'Node.js', 'Lemon Squeezy'],
     github: '#',
     live: '#',
-    color: 'purple'
   },
   {
-    id: 'project-4',
-    title: 'Blabber Bot AI',
-    description: 'An AI-driven chatbot utilizing OpenAI API for text summarization, generation, and image creation capabilities.',
-    tech: ['React', 'OpenAI API', 'Node.js'],
+    id: 'client-sites',
+    title: 'Client Websites',
+    description: 'Freelance work: high-conversion landing pages for bluedigital.co.in and vertexgridsystems.com. Also built amhtourism.com — a full tourism portal with interactive maps, itinerary planners, and responsive media galleries.',
+    tech: ['React', 'Next.js', 'Tailwind', 'Google Maps API'],
     github: '#',
     live: '#',
-    color: 'orange'
-  }
+  },
 ];

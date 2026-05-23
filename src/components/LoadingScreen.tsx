@@ -7,7 +7,6 @@ export const LoadingScreen = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Fake progress loading (0 to 100%)
     if (!loaded) {
       const interval = setInterval(() => {
         setProgress((prev) => {
@@ -31,51 +30,33 @@ export const LoadingScreen = () => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#06000f]"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a]"
         >
-          <div className="text-4xl font-bold text-gradient mb-8 tracking-widest uppercase">
+          <div className="text-2xl font-black text-[#f0ede8] mb-8 tracking-widest uppercase font-lexend">
             Loading
-            <motion.span
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
-              .
-            </motion.span>
-            <motion.span
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, delay: 0.3 }}
-            >
-              .
-            </motion.span>
-            <motion.span
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, delay: 0.6 }}
-            >
-              .
-            </motion.span>
+            <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>.</motion.span>
+            <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.3 }}>.</motion.span>
+            <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.6 }}>.</motion.span>
           </div>
           
-          <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
+          <div className="w-48 h-px bg-[#222] overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-brand-pink via-brand-cyan to-brand-purple"
+              className="h-full bg-[#e8d5b0]"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ ease: 'linear', duration: 0.3 }}
             />
           </div>
-          <div className="mt-4 text-white/50 text-sm font-mono">{Math.min(progress, 100)}%</div>
+          <div className="mt-3 text-[#737373] text-xs font-mono">{Math.min(progress, 100)}%</div>
           
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="mt-12 text-center px-6 max-w-sm"
+            className="mt-10 text-[#444] text-xs tracking-wider uppercase text-center px-6"
           >
-            <p className="text-white/40 text-xs tracking-wider uppercase leading-relaxed">
-              For the best cinematic 3D experience, <br/>
-              <span className="text-brand-cyan">please view on a laptop or larger screen.</span>
-            </p>
-          </motion.div>
+            Best on a laptop or larger screen
+          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>

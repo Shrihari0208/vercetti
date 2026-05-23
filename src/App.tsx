@@ -51,7 +51,7 @@ function App() {
     <>
       <LoadingScreen />
       
-      <div className="relative min-h-screen bg-[#06000f] text-white overflow-x-hidden font-lexend selection:bg-brand-pink/30 selection:text-white">
+      <div className="relative min-h-screen bg-[#0a0a0a] text-[#f0ede8] overflow-x-hidden font-lexend selection:bg-white/10 selection:text-white">
         {/* 3D Canvas fixed relative to viewport */}
         <div className="fixed inset-0 z-0">
           <SceneErrorBoundary>

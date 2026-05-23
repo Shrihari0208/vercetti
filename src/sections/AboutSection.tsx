@@ -17,7 +17,6 @@ export const AboutSection = () => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Retrieve environment variables
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -40,7 +39,6 @@ export const AboutSection = () => {
       })
       .finally(() => {
         setIsSubmitting(false);
-        // Reset status message after a few seconds
         setTimeout(() => setSubmitStatus('idle'), 5000);
       });
   };
@@ -49,111 +47,115 @@ export const AboutSection = () => {
     <section id="about" ref={ref} className="min-h-screen flex items-center py-20 pb-32">
       <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 pointer-events-none">
         
-        {/* Left Content: Bio and Timeline */}
+        {/* Left: Bio and Timeline */}
         <div className="flex flex-col justify-center pointer-events-auto">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h3 className="text-brand-orange tracking-widest uppercase text-sm mb-2 font-mono">My Journey</h3>
-            <h2 className="text-5xl font-black uppercase tracking-tighter mb-8 drop-shadow-md">About <span className="text-gradient">Me</span></h2>
+            <p className="eyebrow mb-3">Background</p>
+            <h2 className="text-5xl font-black uppercase tracking-tighter mb-8 text-[#f0ede8]">About</h2>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-white/60 leading-relaxed mb-10"
+            transition={{ delay: 0.15 }}
+            className="text-[#737373] leading-relaxed mb-10 text-sm max-w-md"
           >
-            Frontend Developer with experience building responsive, accessible applications using React, Next.js, and Redux Toolkit. Skilled in RESTful APIs, modern JavaScript/TypeScript, and integrating tools like Google Maps and Supabase; deeply collaborative and committed to writing clean, SOLID, and DRY code.
+            Frontend developer with 1+ year shipping production React and React Native apps. Currently at Meon Technologies building fintech platforms — IPO workflows, KYC, and admin dashboards — from the ground up. I work with TypeScript, Next.js, Redux Toolkit, and know my way around a backend when needed.
           </motion.p>
 
           {/* Timeline */}
-          <div className="space-y-6 relative border-l border-white/20 ml-3 pl-6">
+          <div className="space-y-6 relative border-l border-[#222] ml-3 pl-6">
             {[
-              { year: '2020', title: 'B.Sc. Agriculture (Hons)', desc: 'Started at College of Agriculture, Nagpur (Dr. PDKV).' },
-              { year: '2024', title: 'Graduation & Internship', desc: 'Graduated and joined Blue Digital Media as a Frontend Developer Intern, building CRM platforms for 60,000+ vendors.' },
-              { year: 'Sep 2024', title: 'React Developer', desc: 'Promoted to full-time React Developer. Developed the Abu Dhabi SC Events Portal and Snapit.ae UI.' },
-              { year: 'Present', title: 'Freelance & Full-Stack', desc: 'Crafting high-conversion landing pages and exploring AI-driven full-stack applications.' }
+              {
+                year: '2020 – 2024',
+                title: 'B.Sc.',
+                desc: 'College of Agriculture, Nagpur — Dr. PDKV. Built things on the side throughout.'
+              },
+              {
+                year: 'Aug 2024',
+                title: 'Frontend Intern — Blue Digital Media',
+                desc: 'Built the Elsopro CRM front-end (60,000+ vendors) and integrated Google Maps API. Shipped on schedule, promoted within two months.'
+              },
+              {
+                year: 'Sep 2024',
+                title: 'React Developer — Blue Digital Media',
+                desc: 'Led front-end for the Abu Dhabi Sports Council portal and Snapit.ae. Owned bilingual layouts, OAuth 2.0 auth flows, and Agile sprints.'
+              },
+              {
+                year: 'Jun 2025 – Now',
+                title: 'Frontend Developer — Meon Technologies',
+                desc: 'Architecting fintech products from scratch: OCR Admin, NCD IPO platform, KYC workflows, Super Admin, and a Central Tool for cross-product management.'
+              }
             ].map((item, idx) => (
               <motion.div 
                 key={item.year}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -15 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3 + (idx * 0.1) }}
+                transition={{ delay: 0.2 + (idx * 0.1) }}
                 className="relative"
               >
-                <div className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-brand-orange shadow-[0_0_10px_#ff8c00]"></div>
-                <h4 className="text-brand-orange font-mono text-sm mb-1">{item.year}</h4>
-                <h5 className="font-bold uppercase tracking-wider mb-1">{item.title}</h5>
-                <p className="text-sm text-white/50">{item.desc}</p>
+                <div className="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-[#e8d5b0]"></div>
+                <h4 className="text-[#e8d5b0] font-mono text-xs mb-1 uppercase tracking-wider">{item.year}</h4>
+                <h5 className="font-bold tracking-wide mb-1 text-sm text-[#f0ede8]">{item.title}</h5>
+                <p className="text-xs text-[#737373]">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Right Content: Contact form that hovers above the 3D scene elements */}
+        {/* Right: Contact form */}
         <div className="flex flex-col justify-center pointer-events-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="glass-pink p-8 rounded-2xl relative overflow-hidden"
+            transition={{ delay: 0.3 }}
+            className="card p-8"
           >
-            {/* Subtle glow background */}
-            <div className="absolute top-0 right-0 -m-20 w-40 h-40 bg-brand-pink/20 rounded-full blur-3xl rounded-full"></div>
+            <p className="eyebrow mb-2">Contact</p>
+            <h3 className="text-xl font-bold tracking-wide mb-6 text-[#f0ede8]">Send a message</h3>
             
-            <h3 className="text-2xl font-black uppercase tracking-wider mb-6 relative z-10">Get in Touch</h3>
-            
-            <form ref={formRef} className="space-y-4 relative z-10" onSubmit={sendEmail}>
-              <div>
-                <input 
-                  type="text" 
-                  name="user_name"
-                  placeholder="Your Name" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide"
-                />
-              </div>
-              <div>
-                <input 
-                  type="email" 
-                  name="user_email"
-                  placeholder="Your Email" 
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide"
-                />
-              </div>
-              <div>
-                <textarea 
-                  name="message"
-                  placeholder="Your Message..." 
-                  rows={4}
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-pink transition-colors font-light tracking-wide resize-none"
-                ></textarea>
-              </div>
+            <form ref={formRef} className="space-y-4" onSubmit={sendEmail}>
+              <input 
+                type="text" 
+                name="user_name"
+                placeholder="Your name" 
+                required
+                className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm"
+              />
+              <input 
+                type="email" 
+                name="user_email"
+                placeholder="Your email" 
+                required
+                className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm"
+              />
+              <textarea 
+                name="message"
+                placeholder="What are you building?" 
+                rows={4}
+                required
+                className="w-full bg-transparent border border-[#222] rounded px-4 py-3 text-[#f0ede8] placeholder-[#444] focus:outline-none focus:border-[#444] transition-colors text-sm resize-none"
+              ></textarea>
 
               {submitStatus === 'success' && (
-                <div className="text-green-400 text-sm font-mono tracking-wider text-center py-2 animate-pulse">
-                  ✓ Message sent successfully
-                </div>
+                <p className="text-[#4ade80] text-xs font-mono">Message sent.</p>
               )}
               {submitStatus === 'error' && (
-                <div className="text-red-400 text-sm font-mono tracking-wider text-center py-2">
-                  ✗ Failed to send message. Please check API keys.
-                </div>
+                <p className="text-red-400 text-xs font-mono">Failed to send — check API keys.</p>
               )}
 
               <button 
                 disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-brand-pink to-brand-purple rounded-lg font-bold uppercase tracking-widest hover:opacity-90 disabled:opacity-50 transition-opacity flex justify-center items-center neon-shadow-pink"
+                className="btn-primary w-full justify-center disabled:opacity-50"
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? 'Sending...' : 'Send message →'}
               </button>
             </form>
           </motion.div>

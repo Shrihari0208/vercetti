@@ -11,46 +11,40 @@ export const SkillsSection = () => {
         
         <div className="flex flex-col justify-center pointer-events-auto">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h3 className="text-brand-cyan tracking-widest uppercase text-sm mb-2 font-mono">Competencies</h3>
-            <h2 className="text-5xl font-black uppercase tracking-tighter mb-12 drop-shadow-md">My <span className="text-gradient">Arsenal</span></h2>
+            <p className="eyebrow mb-3">Technical skills</p>
+            <h2 className="text-5xl font-black uppercase tracking-tighter mb-10 text-[#f0ede8]">Stack</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {SKILLS_DATA.map((skill, idx) => (
               <motion.div
                 key={skill.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.15 }}
-                className="glass-cyan p-6 rounded-xl hover:-translate-y-2 transition-transform duration-300"
+                transition={{ delay: idx * 0.1 }}
+                className="card p-5"
               >
-                <div className="flex justify-between items-end mb-4">
-                  <h4 className="text-lg font-bold uppercase tracking-wider">{skill.name}</h4>
-                  <span className="text-brand-cyan font-mono text-sm">{skill.percent}%</span>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-[#737373] mb-3">{skill.name}</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {skill.items.map((item) => (
+                    <span
+                      key={item}
+                      className="text-xs px-2 py-1 border border-[#333] text-[#f0ede8]/80 rounded"
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
-                
-                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-3">
-                  <motion.div 
-                    className="h-full bg-brand-cyan shadow-[0_0_10px_#00f5ff]"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.percent}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.2 + (idx * 0.1), ease: "easeOut" }}
-                  />
-                </div>
-                
-                <p className="text-xs text-white/50">{skill.items}</p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Right side is intentionally empty for 3D space */}
         <div className="hidden lg:block"></div>
       </div>
     </section>
