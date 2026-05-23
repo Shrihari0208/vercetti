@@ -29,5 +29,5 @@ export const CONTACT_INFO = {
 export const EMAIL_JS = {
   serviceId: 'service_cq4olh2',
   templateId: 'template_k7qqbyj',
-  publicKey: 'h8dGQ74tZk8zLsE5Y',
+  publicKey: 'uZ4k-RRHx39PQ1sG5',
 } as const;
