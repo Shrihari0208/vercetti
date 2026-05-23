@@ -66,8 +66,8 @@ export const HeroSection = () => {
             <a href="#projects" className="btn-primary">
               Selected work →
             </a>
-            <a href="/resume.pdf" download="Shrihari_Deshmukh_Resume.pdf" className="btn-secondary">
-              Download CV
+            <a href="/Shrihari_Deshmukh_Resume.pdf" download="Shrihari_Deshmukh_Resume.pdf" className="btn-secondary">
+              Download CV 
             </a>
           </motion.div>
         </div>
