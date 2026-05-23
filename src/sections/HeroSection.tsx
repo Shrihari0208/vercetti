@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
 import { useScrollSection } from '../hooks/useScrollSection';
+import resumePdfUrl from '../assets/Shrihari_Deshmukh_Resume.pdf';
+
+const RESUME_FILENAME = 'Shrihari_Deshmukh_Resume.pdf';
 
 export const HeroSection = () => {
   const ref = useScrollSection<HTMLElement>('hero');
@@ -66,8 +69,12 @@ export const HeroSection = () => {
             <a href="#projects" className="btn-primary">
               Selected work →
             </a>
-            <a href="/Shrihari_Deshmukh_Resume.pdf" download="Shrihari_Deshmukh_Resume.pdf" className="btn-secondary">
-              Download CV 
+            <a
+              href={resumePdfUrl}
+              download={RESUME_FILENAME}
+              className="btn-secondary"
+            >
+              Download CV
             </a>
           </motion.div>
         </div>
