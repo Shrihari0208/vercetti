@@ -13,7 +13,7 @@ export const HeroSection = () => {
         
         <div className="flex flex-col justify-center pointer-events-auto">
           {/* Availability badge */}
-          <motion.div 
+          {/* <motion.div 
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -21,7 +21,7 @@ export const HeroSection = () => {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-[#4ade80]"></div>
             <span className="text-xs font-mono text-[#737373] uppercase tracking-widest">Frontend Developer @ Meon Technologies</span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Name */}
           <motion.h1 
